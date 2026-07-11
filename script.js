@@ -12,7 +12,7 @@ const camera = new THREE.PerspectiveCamera(
     1000
 );
 
-camera.position.set(0, 5, 14);
+camera.position.set(0, 4, 10);
 
 
 // Renderer
@@ -455,8 +455,8 @@ const cat1 = createCuteCat();
 
 cat1.position.set(
     0,
-    1,
-    2
+    2,
+    0
 );
 
 
