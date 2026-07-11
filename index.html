@@ -17,29 +17,39 @@
 
 body{
     background:#000;
-    overflow:hidden;
     height:100vh;
+    overflow:hidden;
+    perspective:1000px;
     font-family:Arial,sans-serif;
-    perspective:1200px;
 }
+
 
 
 #heart{
+
     position:absolute;
+
     top:50%;
     left:50%;
+
+    transform:
+    translate(-50%,-50%);
+
     transform-style:preserve-3d;
-    animation:pulse 2.2s infinite ease-in-out;
+
+    animation:heartbeat 2s infinite ease-in-out;
+
 }
+
 
 
 .word{
 
     position:absolute;
 
-    color:#ff1717;
+    color:#ff1111;
 
-    font-size:17px;
+    font-size:16px;
 
     letter-spacing:2px;
 
@@ -47,14 +57,16 @@ body{
 
 
     text-shadow:
-    0 0 5px #ff0000,
-    0 0 15px #ff0000,
+
+    0 0 5px red,
+    0 0 15px red,
     0 0 30px #990000;
 
 
     transform-style:preserve-3d;
 
-    animation:float 3s infinite alternate ease-in-out;
+
+    animation:shine 2s infinite alternate;
 
 }
 
@@ -67,33 +79,35 @@ body{
     top:50%;
     left:50%;
 
-    transform:translate(-50%,-50%);
 
-    color:#ff2020;
+    transform:
+    translate(-50%,-50%);
 
-    font-size:42px;
+
+    color:#ff2222;
+
+    font-size:40px;
 
     font-weight:bold;
 
-    letter-spacing:5px;
+    letter-spacing:4px;
 
 
     text-shadow:
 
     0 0 10px red,
     0 0 25px red,
-    0 0 50px #900;
+    0 0 50px darkred;
 
 
-    animation:yuGlow 2s infinite alternate;
+    animation:yuPulse 2s infinite;
 
-    z-index:10;
 
 }
 
 
 
-@keyframes pulse{
+@keyframes heartbeat{
 
 
 0%,100%{
@@ -113,37 +127,17 @@ scale(1.12);
 
 }
 
-}
-
-
-
-
-@keyframes float{
-
-
-0%{
-
-margin-top:-8px;
-
-}
-
-
-100%{
-
-margin-top:8px;
-
-}
 
 }
 
 
 
-@keyframes yuGlow{
+@keyframes shine{
 
 
 from{
 
-opacity:.7;
+opacity:.65;
 
 }
 
@@ -154,10 +148,41 @@ opacity:1;
 
 }
 
+
+}
+
+
+
+@keyframes yuPulse{
+
+
+0%,100%{
+
+opacity:.7;
+
+transform:
+translate(-50%,-50%)
+scale(1);
+
+}
+
+
+50%{
+
+opacity:1;
+
+transform:
+translate(-50%,-50%)
+scale(1.15);
+
+}
+
+
 }
 
 
 </style>
+
 
 </head>
 
@@ -166,6 +191,7 @@ opacity:1;
 
 
 <div id="heart"></div>
+
 
 <div id="yu">
 yu
@@ -179,14 +205,14 @@ yu
 const heart=document.getElementById("heart");
 
 
-const total=100;
+const amount=100;
 
 
 
-for(let i=0;i<total;i++){
+for(let i=0;i<amount;i++){
 
 
-let t=(Math.PI*2/total)*i;
+let t=(Math.PI*2/amount)*i;
 
 
 
@@ -213,18 +239,17 @@ word.innerHTML="I love you";
 
 
 
-let depth=Math.sin(t)*120;
+let z=Math.sin(t)*80;
 
 
 
 word.style.transform=
 `
 translate3d(
-${x*18}px,
-${-y*18}px,
-${depth}px
+${x*17}px,
+${-y*17}px,
+${z}px
 )
-rotateZ(${t}rad)
 `;
 
 
