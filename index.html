@@ -7,66 +7,51 @@
 <title>Love Forever</title>
 
 <style>
-html,body{
+*{
     margin:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    background:#000;
-    font-family:Arial, sans-serif;
+    padding:0;
+    box-sizing:border-box;
 }
 
-#ui{
+body{
+    background:#000;
+    overflow:hidden;
+    height:100vh;
+    perspective:1000px;
+    font-family:Arial,sans-serif;
+}
+
+
+#scene{
+    position:absolute;
+    width:100%;
+    height:100%;
+    transform-style:preserve-3d;
+}
+
+
+#heart{
     position:absolute;
     top:50%;
     left:50%;
+    transform-style:preserve-3d;
+    animation:beat 2s infinite ease-in-out;
 }
 
-.love{
+
+.word{
     position:absolute;
-    top:0;
-    left:0;
-    width:0;
-    height:0;
-}
-
-.love_word{
-    color:#bd0606;
-    font-size:18px;
+    color:#ff1010;
+    font-size:16px;
     letter-spacing:2px;
     white-space:nowrap;
+
     text-shadow:
-        0 0 5px #ff0000,
-        0 0 15px #bd0606;
-    transform:translate(-50%,-50%);
-}
+    0 0 5px red,
+    0 0 15px red,
+    0 0 30px #900;
 
-
-.love_horizontal{
-    animation:rotate 12s linear infinite;
-}
-
-.love_vertical{
-    animation:float 5s ease-in-out infinite alternate;
-}
-
-
-@keyframes rotate{
-    from{
-        transform:rotate(0deg);
-    }
-    to{
-        transform:rotate(360deg);
-    }
-}
-
-@keyframes float{
-    from{
-        transform:translateY(-8px);
-    }
-    to{
-        transform:translateY(8px);
-    }
+    transform-style:preserve-3d;
 }
 
 
@@ -75,83 +60,167 @@ html,body{
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
-
-    color:#ff1a1a;
-    font-size:42px;
+    
+    color:#ff2222;
+    font-size:45px;
     font-weight:bold;
+    letter-spacing:5px;
 
     text-shadow:
     0 0 10px red,
     0 0 25px red,
-    0 0 40px #900;
+    0 0 50px #900;
 
-    animation:pulse 2s infinite;
+    animation:glow 2s infinite alternate;
+    z-index:5;
 }
 
 
-@keyframes pulse{
+@keyframes beat{
+
     0%,100%{
-        transform:translate(-50%,-50%) scale(1);
+        transform:
+        translate(-50%,-50%)
+        scale(1)
+        rotateX(10deg)
+        rotateY(0deg);
     }
+
     50%{
-        transform:translate(-50%,-50%) scale(1.15);
+        transform:
+        translate(-50%,-50%)
+        scale(1.15)
+        rotateX(20deg)
+        rotateY(180deg);
+    }
+}
+
+
+@keyframes glow{
+
+    from{
+        opacity:.7;
+        transform:
+        translate(-50%,-50%)
+        scale(1);
+    }
+
+    to{
+        opacity:1;
+        transform:
+        translate(-50%,-50%)
+        scale(1.15);
     }
 }
 
 </style>
+
 </head>
+
 
 <body>
 
-<div id="ui"></div>
 
-<div id="yu">yu</div>
+<div id="scene">
+    <div id="heart"></div>
+</div>
+
+
+<div id="yu">
+yu
+</div>
+
 
 
 <script>
 
-const ui=document.getElementById("ui");
+const heart=document.getElementById("heart");
 
-const N=100;
+const count=100;
 
-for(let i=0;i<N;i++){
 
-    let love=document.createElement("div");
-    love.className="love";
+for(let i=0;i<count;i++){
 
-    let h=document.createElement("div");
-    h.className="love_horizontal";
+    let t=Math.PI*2*i/count;
 
-    let v=document.createElement("div");
-    v.className="love_vertical";
+
+    let x=
+    16*Math.pow(Math.sin(t),3);
+
+
+    let y=
+    13*Math.cos(t)
+    -5*Math.cos(2*t)
+    -2*Math.cos(3*t)
+    -Math.cos(4*t);
 
 
     let word=document.createElement("div");
-    word.className="love_word";
+
+    word.className="word";
+
     word.innerHTML="I love you";
 
 
-    let angle=(Math.PI*2/N)*i;
-
-    let x=16*Math.pow(Math.sin(angle),3);
-    let y=
-    -(13*Math.cos(angle)
-    -5*Math.cos(2*angle)
-    -2*Math.cos(3*angle)
-    -Math.cos(4*angle));
+    let z=Math.sin(t)*80;
 
 
-    love.style.transform=
-    `translate(${x*18}px,${y*18}px)`;
+    word.style.transform=
+    `
+    translate3d(
+    ${x*15}px,
+    ${-y*15}px,
+    ${z}px
+    )
+    rotateZ(${t}rad)
+    `;
 
 
-    v.appendChild(word);
-    h.appendChild(v);
-    love.appendChild(h);
-    ui.appendChild(love);
+    word.style.animation=
+    `
+    move ${4+Math.random()*4}s
+    infinite alternate ease-in-out
+    `;
+
+
+    heart.appendChild(word);
 }
 
+
+
+let style=document.createElement("style");
+
+style.innerHTML=`
+
+@keyframes move{
+
+0%{
+
+margin-top:-10px;
+
+filter:brightness(1);
+
+}
+
+
+100%{
+
+margin-top:10px;
+
+filter:brightness(1.8);
+
+}
+
+}
+
+`;
+
+document.head.appendChild(style);
+
+
+
 </script>
+
 
 </body>
 </html>
