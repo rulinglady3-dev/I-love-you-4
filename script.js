@@ -461,9 +461,9 @@ cat1.position.set(
 
 
 cat1.scale.set(
-    0.8,
-    0.8,
-    0.8
+    2,
+    2,
+    2
 );
 
 
