@@ -258,3 +258,106 @@ window.innerHeight
 
 
 });
+// 🐱 İlk kedi yükleme
+
+const loader = new THREE.GLTFLoader();
+
+let cat1;
+
+
+loader.load(
+    "models/cat1.glb",
+
+    function(gltf){
+
+        cat1 = gltf.scene;
+
+        cat1.scale.set(
+            1.5,
+            1.5,
+            1.5
+        );
+
+
+        cat1.position.set(
+            0,
+            0,
+            2
+        );
+
+
+        cat1.rotation.y = Math.PI;
+
+
+        cat1.traverse(
+            function(obj){
+
+                if(obj.isMesh){
+
+                    obj.castShadow = true;
+
+                }
+
+            }
+        );
+
+
+        scene.add(cat1);
+
+
+
+        // 🐾 Boyundaki yu yazısı
+
+        const canvas =
+        document.createElement("canvas");
+
+        const ctx =
+        canvas.getContext("2d");
+
+
+        canvas.width=256;
+        canvas.height=128;
+
+
+        ctx.fillStyle="#ffdddd";
+        ctx.font="bold 80px Arial";
+        ctx.textAlign="center";
+        ctx.fillText(
+            "yu",
+            128,
+            85
+        );
+
+
+        const texture =
+        new THREE.CanvasTexture(canvas);
+
+
+
+        const tag =
+        new THREE.Sprite(
+            new THREE.SpriteMaterial({
+                map:texture
+            })
+        );
+
+
+        tag.scale.set(
+            0.5,
+            0.25,
+            1
+        );
+
+
+        tag.position.set(
+            0,
+            1.5,
+            0.5
+        );
+
+
+        cat1.add(tag);
+
+
+    }
+);
