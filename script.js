@@ -468,6 +468,77 @@ cat1.scale.set(
 
 
 scene.add(cat1);
+
+// 💗 Kedinin boynuna "yu" yazısı
+
+const tagCanvas = document.createElement("canvas");
+const tagCtx = tagCanvas.getContext("2d");
+
+tagCanvas.width = 256;
+tagCanvas.height = 128;
+
+
+tagCtx.fillStyle = "#ffffff";
+tagCtx.font = "bold 80px Arial";
+tagCtx.textAlign = "center";
+tagCtx.fillText(
+    "yu",
+    128,
+    85
+);
+
+
+const tagTexture =
+new THREE.CanvasTexture(tagCanvas);
+
+
+const yuTag =
+new THREE.Sprite(
+    new THREE.SpriteMaterial({
+        map:tagTexture,
+        transparent:true
+    })
+);
+
+
+yuTag.scale.set(
+    0.45,
+    0.22,
+    1
+);
+
+
+yuTag.position.set(
+    0,
+    1.15,
+    -1.05
+);
+
+
+cat1.add(yuTag);
+
+
+
+// 🐱 Kedi animasyon değişkeni
+
+let catBreath = 0;
+
+
+
+// animate fonksiyonunun içine ekle:
+// (renderer.render'dan hemen önce)
+
+catBreath += 0.03;
+
+if(cat1){
+
+    cat1.scale.y =
+    0.8 + Math.sin(catBreath)*0.015;
+
+    cat1.rotation.y =
+    Math.sin(catBreath)*0.05;
+
+}
 animate();
 
 
