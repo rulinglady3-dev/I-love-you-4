@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Love Forever</title>
+
+<style>
+html,body{
+    margin:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#000;
+    font-family:Arial, sans-serif;
+}
+
+#ui{
+    position:absolute;
+    top:50%;
+    left:50%;
+}
+
+.love{
+    position:absolute;
+    top:0;
+    left:0;
+    width:0;
+    height:0;
+}
+
+.love_word{
+    color:#bd0606;
+    font-size:18px;
+    letter-spacing:2px;
+    white-space:nowrap;
+    text-shadow:
+        0 0 5px #ff0000,
+        0 0 15px #bd0606;
+    transform:translate(-50%,-50%);
+}
+
+
+.love_horizontal{
+    animation:rotate 12s linear infinite;
+}
+
+.love_vertical{
+    animation:float 5s ease-in-out infinite alternate;
+}
+
+
+@keyframes rotate{
+    from{
+        transform:rotate(0deg);
+    }
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+@keyframes float{
+    from{
+        transform:translateY(-8px);
+    }
+    to{
+        transform:translateY(8px);
+    }
+}
+
+
+#yu{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+
+    color:#ff1a1a;
+    font-size:42px;
+    font-weight:bold;
+
+    text-shadow:
+    0 0 10px red,
+    0 0 25px red,
+    0 0 40px #900;
+
+    animation:pulse 2s infinite;
+}
+
+
+@keyframes pulse{
+    0%,100%{
+        transform:translate(-50%,-50%) scale(1);
+    }
+    50%{
+        transform:translate(-50%,-50%) scale(1.15);
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="ui"></div>
+
+<div id="yu">yu</div>
+
+
+<script>
+
+const ui=document.getElementById("ui");
+
+const N=100;
+
+for(let i=0;i<N;i++){
+
+    let love=document.createElement("div");
+    love.className="love";
+
+    let h=document.createElement("div");
+    h.className="love_horizontal";
+
+    let v=document.createElement("div");
+    v.className="love_vertical";
+
+
+    let word=document.createElement("div");
+    word.className="love_word";
+    word.innerHTML="I love you";
+
+
+    let angle=(Math.PI*2/N)*i;
+
+    let x=16*Math.pow(Math.sin(angle),3);
+    let y=
+    -(13*Math.cos(angle)
+    -5*Math.cos(2*angle)
+    -2*Math.cos(3*angle)
+    -Math.cos(4*angle));
+
+
+    love.style.transform=
+    `translate(${x*18}px,${y*18}px)`;
+
+
+    v.appendChild(word);
+    h.appendChild(v);
+    love.appendChild(h);
+    ui.appendChild(love);
+}
+
+</script>
+
+</body>
+</html>
