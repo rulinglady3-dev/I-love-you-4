@@ -233,7 +233,241 @@ function animate(){
 
 }
 
+// 🐱 SEVİMLİ TURUNCU YAVRU KEDİ
 
+function createCuteCat(color = 0xff8c32){
+
+    const cat = new THREE.Group();
+
+
+    // Gövde
+    const body = new THREE.Mesh(
+        new THREE.SphereGeometry(1.2,32,32),
+        new THREE.MeshStandardMaterial({
+            color:color,
+            roughness:0.8
+        })
+    );
+
+    body.scale.set(
+        1,
+        0.9,
+        1.3
+    );
+
+    cat.add(body);
+
+
+
+    // Kafa
+    const head = new THREE.Mesh(
+        new THREE.SphereGeometry(1,32,32),
+        new THREE.MeshStandardMaterial({
+            color:color,
+            roughness:0.8
+        })
+    );
+
+    head.position.y=1.5;
+
+    cat.add(head);
+
+
+
+    // Kulak yapma
+    function ear(x){
+
+        const e = new THREE.Mesh(
+            new THREE.ConeGeometry(
+                0.35,
+                0.7,
+                20
+            ),
+            new THREE.MeshStandardMaterial({
+                color:color
+            })
+        );
+
+
+        e.position.set(
+            x,
+            2.35,
+            0
+        );
+
+
+        e.rotation.x=-0.2;
+
+        return e;
+
+    }
+
+
+    cat.add(ear(-0.45));
+    cat.add(ear(0.45));
+
+
+
+
+    // Göz yapma
+    function eye(x){
+
+        const e = new THREE.Mesh(
+
+            new THREE.SphereGeometry(
+                0.25,
+                32,
+                32
+            ),
+
+            new THREE.MeshStandardMaterial({
+                color:0x000000,
+                emissive:0x222222
+            })
+
+        );
+
+
+        e.position.set(
+            x,
+            1.65,
+            -0.9
+        );
+
+
+        return e;
+
+    }
+
+
+    cat.add(eye(-0.35));
+    cat.add(eye(0.35));
+
+
+
+    // Burun
+    const nose =
+    new THREE.Mesh(
+
+        new THREE.SphereGeometry(
+            0.12,
+            20,
+            20
+        ),
+
+        new THREE.MeshStandardMaterial({
+            color:0xff9bb5
+        })
+
+    );
+
+
+    nose.position.set(
+        0,
+        1.35,
+        -1
+    );
+
+
+    cat.add(nose);
+
+
+
+
+    // Kuyruk
+    const tail =
+    new THREE.Mesh(
+
+        new THREE.TorusGeometry(
+            0.55,
+            0.12,
+            16,
+            50,
+            Math.PI
+        ),
+
+        new THREE.MeshStandardMaterial({
+            color:color
+        })
+
+    );
+
+
+    tail.position.set(
+        0,
+        0.4,
+        1.2
+    );
+
+
+    tail.rotation.x=Math.PI/2;
+
+
+    cat.add(tail);
+
+
+
+    // Patiler
+    function paw(x,z){
+
+        const p =
+        new THREE.Mesh(
+
+            new THREE.SphereGeometry(
+                0.3,
+                20,
+                20
+            ),
+
+            new THREE.MeshStandardMaterial({
+                color:color
+            })
+
+        );
+
+
+        p.position.set(
+            x,
+            -0.8,
+            z
+        );
+
+
+        return p;
+
+    }
+
+
+    cat.add(paw(-0.5,-0.8));
+    cat.add(paw(0.5,-0.8));
+
+
+
+    return cat;
+
+}
+
+
+
+// Kediyi oluştur
+
+const cat1 = createCuteCat();
+
+cat1.position.set(
+    0,
+    1,
+    2
+);
+
+
+cat1.scale.set(
+    0.8,
+    0.8,
+    0.8
+);
+
+
+scene.add(cat1);
 animate();
 
 
